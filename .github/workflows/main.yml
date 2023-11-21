@@ -20,14 +20,11 @@ jobs:
 
       - name: Checking out own repository
         uses: actions/checkout@v3
-        with:
-          path: src
 
       - name: Download CounterStrikeSharp.API.dll
         shell: bash
         run: |
-          items=$(curl -s https://api.github.com/repos/roflmuffin/CounterStrikeSharp/actions/artifacts?per_page=4 | jq -r -c '.artifacts[]')
-          for item in ${items[@]};
+          for item in $(curl -s https://api.github.com/repos/roflmuffin/CounterStrikeSharp/actions/artifacts?per_page=4 | jq -r -c '.artifacts[]');
           do
             if [[ $(echo $item | jq -r -c '.name') == "counterstrikesharp-build-api"* ]]; then
               curl -s -L -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" $(echo $item | jq -r -c '.archive_download_url') -o counterstrikesharp-api.zip
@@ -43,13 +40,13 @@ jobs:
 
       - name: Build
         working-directory: src
-        run: dotnet publish -c release -r linux-x64 --no-self-contained -p:DebugSymbols=false -p:DebugType=None -o AutoChangeMap
+        run: dotnet publish -c release -r linux-x64 --no-self-contained -p:DebugSymbols=false -p:DebugType=None -o publish
 
       - name: Uploading package
         uses: actions/upload-artifact@v3
         with:
-          name: src-${{ env.GITHUB_SHA_SHORT }}
-          path: src/ConnectInfo
+          name: Plugin-${{ env.GITHUB_SHA_SHORT }}
+          path: src/publish
 
   release:
     name: Release
