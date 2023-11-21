@@ -29,7 +29,7 @@ jobs:
           items=$(curl -s https://api.github.com/repos/roflmuffin/CounterStrikeSharp/actions/artifacts?per_page=4 | jq -r -c '.artifacts[]')
           for item in ${items[@]};
           do
-            if [[ $(echo $item | jq -r -c '.name') == "counterstrikesharp-build-"* ]]; then
+            if [[ $(echo $item | jq -r -c '.name') == "counterstrikesharp-build-linux"* ]]; then
               curl -s -L -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" $(echo $item | jq -r -c '.archive_download_url') -o counterstrikesharp-api.zip
               break
             fi
