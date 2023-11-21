@@ -42,7 +42,7 @@ jobs:
           dotnet-version: 7.0.x
 
       - name: Build
-        working-directory: AutoMapChanger
+        working-directory: src
         run: dotnet publish -c release -r linux-x64 --no-self-contained -p:DebugSymbols=false -p:DebugType=None -o AutoChangeMap
 
       - name: Uploading package
