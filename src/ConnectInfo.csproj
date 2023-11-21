@@ -8,9 +8,11 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\CounterStrikeSharp.API\CounterStrikeSharp.API.csproj" />
-    </ItemGroup>
+    ItemGroup>
+    <Reference Include="CounterStrikeSharp.API">
+      <HintPath>..\CounterStrikeSharp.API.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="MaxMind.Db" Version="4.0.0" />
